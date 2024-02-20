@@ -18,7 +18,6 @@ const Cube: React.FC = () => {
                         <OrbitControls/>
                         <Environment preset="sunset" background/>
                     </mesh>
-
                 </Suspense>
             </Canvas>
         </>
