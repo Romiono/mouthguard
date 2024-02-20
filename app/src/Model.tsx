@@ -31,15 +31,15 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader.js";
 export default function Model() {
     // @ts-ignore
     const gltf = useLoader(GLTFLoader, "./papa.gltf");
-    // const material = new MeshBasicMaterial({ color: '' });
-    // gltf.scene.traverse((child:any) => {
-    //     if (child.isMesh) {
-    //         child.material = material;
-    //     }
-    // });
+        // const material = new MeshBasicMaterial({ color: 'red' });
+        // gltf.scene.traverse((child:any) => {
+        //     if (child.isMesh) {
+        //         child.material = material;
+        //     }
+        // });
     return (
         <>
             <primitive object={gltf.scene} scale={0.4} />
         </>
     );
-};
+}

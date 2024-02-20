@@ -1,4 +1,3 @@
-
 import './App.css';
 import Cube from "./components/Cube.tsx";
 
