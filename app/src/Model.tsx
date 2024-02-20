@@ -24,18 +24,18 @@
 //
 // useGLTF.preload("/Poimandres.gltf");
 //
-// import {useLoader} from "@react-three/fiber";
-// import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader.js";
+
 import {Mesh, MeshStandardMaterial} from "three";
 import {useGLTF} from "@react-three/drei";
 
-export default function Model() {
-    // const gltf = useLoader(GLTFLoader, "./papa.gltf");
-    //
-    const gltf1 = useGLTF('./papa.gltf');
+interface IModel {
+    color: string
+}
 
-    //
-        const material = new MeshStandardMaterial({ color: 'green' });
+export default function Model({color} : IModel) {
+    const gltf1 = useGLTF('./papa.gltf');
+    gltf1.scene.rotation.set(1.5, 0, 0 );
+        const material = new MeshStandardMaterial({ color: color });
         gltf1.scene.traverse((child: Mesh) => {
             if (child.isMesh) {
                 child.material = material;
@@ -46,7 +46,6 @@ export default function Model() {
     return (
         <>
             <primitive object={gltf1.scene} scale={0.4} castShadow={true} receiveShadow={true}/>
-            {/*<spotLight position={[10, 10, 10]} intensity={1} castShadow/>*/}
         </>
     );
 }
