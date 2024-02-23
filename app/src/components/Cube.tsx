@@ -3,12 +3,14 @@ import {Environment, OrbitControls} from "@react-three/drei";
 import {Canvas} from "@react-three/fiber";
 import Model from "../Model.tsx";
 import '../App.css';
+import {Capa} from "../Capa.tsx";
+import {MG, Mouthguard} from "../Mouthguard.tsx";
 
 
 
 
 const Cube: React.FC = () => {
-    const [color, setColor] = useState('white');
+    const [color, setColor] = useState('green');
     const [messege, setMessege] = useState('');
 
 
@@ -42,7 +44,7 @@ const Cube: React.FC = () => {
             <Suspense fallback={null}>
                     <mesh>
                         <meshStandardMaterial color="red"/>
-                        <Model color={color} message={messege}/>
+                        <Capa color={color} message={messege}/>
                         <OrbitControls enablePan={false} enableZoom={false}/>
                         <Environment preset="sunset" background/>
                         {/*<spotLight position={[10, 10, 10]} int   ensity={1} castShadow/>*/}
