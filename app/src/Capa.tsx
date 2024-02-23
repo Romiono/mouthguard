@@ -8,6 +8,10 @@ import {CanvasTexture, MeshStandardMaterial} from "three";
 import {useControls} from "leva";
 import {useState} from "react";
 import {degToRad} from "three/src/math/MathUtils.js";
+// @ts-ignore
+import {DecalGeometry} from "three/examples/jsm/geometries/DecalGeometry";
+// @ts-ignore
+import {Geometry} from "three/examples/jsm/deprecated/Geometry";
 
 interface IModel {
     color: string;
@@ -17,10 +21,10 @@ interface IModel {
 
 
 export function Capa({color, message}: IModel) {
-    const {nodes} = useGLTF('/capa.glb');
-    const [pos, setPos] = useState([-1, 3, 1]);
-    const [rotation, setRotation] = useState([1, 0, 3.2]);
-    const [scale, setScale] = useState([1, 1, 1]);
+    const node: Geometry = useGLTF('/capa.glb');
+    const [pos, setPos] = useState<DecalGeometry>([-1, 3, 1]);
+    const [rotation, setRotation] = useState<DecalGeometry>([1, 0, 3.2]);
+    const [scale, setScale] = useState<DecalGeometry>([1, 1, 1]);
 
     useControls({
         angle: {
@@ -33,9 +37,10 @@ export function Capa({color, message}: IModel) {
                 const z = Math.sin(value);
                 const rotation = Math.atan2(x, z);
                 setRotation(() => [0, rotation, 0]);
-                setPos((pos) => [x, pos[1], z]);
+                setPos((pos: DecalGeometry) => [x, pos[1], z]);
             }
         }
+
     })
 
     const material = new MeshStandardMaterial({color: color});
@@ -49,9 +54,10 @@ export function Capa({color, message}: IModel) {
         context.fillText(message, 10, 50);
     }
     const textureText = new CanvasTexture(canvas);
+
     return (
         <group dispose={null}>
-            <mesh geometry={nodes['16934_athletic_mouthguard'].geometry} material={material} rotation={[1.57, 0, 0]}>
+            <mesh geometry={node.nodes['16934_athletic_mouthguard'].geometry} material={material} rotation={[1.57,0,0]}  scale={[0.5, 0.5, 0.5]}>
                 <Decal
                     debug
                     position={pos}
