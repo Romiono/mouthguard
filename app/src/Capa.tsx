@@ -1,5 +1,5 @@
 
-import {Decal, useGLTF, useTexture} from '@react-three/drei'
+import {Decal, useGLTF, useTexture} from '@react-three/drei';
 import {CanvasTexture, MeshStandardMaterial} from "three";
 import {useControls} from "leva";
 import {useState} from "react";
@@ -62,6 +62,7 @@ export function Capa({color, message}: IModel) {
     if (context) {
         context.font = "Bold 40px Arial";
         context.fillStyle = 'white'; //
+        context.textAlign = 'center';
         context.fillText(message, 10, 50);
     }
     const textureText = new CanvasTexture(canvas);
