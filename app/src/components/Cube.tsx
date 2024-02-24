@@ -46,7 +46,7 @@ const Cube: React.FC = () => {
                         <meshStandardMaterial color="red"/>
                         <Capa color={color} message={messege}/>
                         {/*<MG color={color} message={messege}/>*/}
-                        <OrbitControls enablePan={false} enableZoom={false}/>
+                        <OrbitControls enablePan={false} />
                         <Environment preset="sunset" background/>
                         {/*<spotLight position={[10, 10, 10]} int   ensity={1} castShadow/>*/}
                         {/*<spotLight position={[-10, -10, 0]} intensity={1} castShadow/>*/}
