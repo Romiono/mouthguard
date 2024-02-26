@@ -2,7 +2,8 @@ import React, {ChangeEvent, Suspense,  useState} from 'react';
 import {Environment, OrbitControls} from "@react-three/drei";
 import {Canvas} from "@react-three/fiber";
 import '../App.css';
-import {Capa} from "../Capa.tsx";
+// import {Capa} from "../Capa.tsx";
+import {MG} from "../Mouthguard.tsx";
 
 
 
@@ -43,8 +44,8 @@ const Cube: React.FC = () => {
             <Suspense fallback={null}>
                     <mesh>
                         <meshStandardMaterial color="red"/>
-                        {/*<MG color={color} message={messege}/>*/}
-                        <Capa color={color} message={messege}/>
+                        <MG color={color} message={messege}/>
+                        {/*<Capa color={color} message={messege}/>*/}
                         <OrbitControls enablePan={false} />
                         <Environment preset="sunset" background/>
                     </mesh>

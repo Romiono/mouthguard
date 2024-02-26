@@ -19,10 +19,10 @@ interface IModel {
 export function Capa({color, message}: IModel) {
     const node: Geometry = useGLTF('/capa.glb');
     const [pos, setPos] = useState<DecalGeometry>([-2, 3, 1]);
-    const [rotation, setRotation] = useState<DecalGeometry>([0,  Math.PI/2, 3.2]);
+    const [rotation, setRotation] = useState<DecalGeometry>([0,  Math.PI/2, 0]);
 
     const [postext, setPostext] = useState<DecalGeometry>([-2, 3, 1]);
-    const [rotationtext, setRotationtext] = useState<DecalGeometry>([0,  Math.PI/2, 3.2]);
+    const [rotationtext, setRotationtext] = useState<DecalGeometry>([0,  Math.PI/2, 0]);
 
     useControls({
         angle: {
