@@ -2,7 +2,7 @@
 import {Decal, useAnimations, useGLTF, useTexture} from '@react-three/drei';
 import {CanvasTexture, MeshStandardMaterial} from "three";
 import {useControls} from "leva";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {degToRad} from "three/src/math/MathUtils.js";
 // @ts-ignore
 import {DecalGeometry} from "three/examples/jsm/geometries/DecalGeometry";
@@ -12,9 +12,11 @@ import {Geometry} from "three/examples/jsm/deprecated/Geometry";
 interface IModel {
     color: string;
     message: string;
+    isAnimationEnabled: boolean;
+
 }
 
-export function MG({color, message}: IModel) {
+export function MG({color, message, isAnimationEnabled}: IModel) {
     const group = useRef<Geometry>();
     const { nodes, animations } = useGLTF("/MG.glb");
     const { actions } = useAnimations(animations, group);
@@ -28,6 +30,13 @@ export function MG({color, message}: IModel) {
     const [scaletext, setScaletext] = useState<DecalGeometry>([1, 1, 1]);
 
     const node: Geometry = nodes["16934_athletic_mouthguard_V1"];
+
+    // useEffect(() => {
+    //     // Воспроизводим анимацию вперед, если чекбокс включен, и в обратную сторону, если выключен
+    //     const direction = isAnimationEnabled ? 1 : -1;
+    //     actions['16934_athletic_mouthguard_V1Action'].reset().setDirection(direction).play();
+    // }, [isAnimationEnabled]);
+
     useControls({
         angle: {
             min: degToRad(180),
