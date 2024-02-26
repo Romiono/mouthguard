@@ -56,7 +56,7 @@ export function MG({color, message}: IModel) {
             }
         },
         scale: {
-            min: 1,
+            min: 0,
             max: 3,
             value: 1,
             step: 0.01,
@@ -64,12 +64,12 @@ export function MG({color, message}: IModel) {
                 setScale(() => [value, value, value])
             }
         }, scaleText: {
-            min: 1,
+            min: 0,
             max: 3,
             value: 1,
             step: 0.01,
             onChange: (value) => {
-                setScaletext(() => [value, value, value])
+                setScaletext(() => [value*3, value, value])
             }
         }
 
@@ -87,11 +87,9 @@ export function MG({color, message}: IModel) {
     if (context) {
         context.font = `${fontSize}px ${fontFamily}`;
 
-        // Если message не пуст, измеряем его ширину
-        const textWidth = message ? context.measureText(message).width : 0;
+        const textWidth = context.measureText(message).width;
 
-        // Установка размеров canvas вручную
-        canvas.width = Math.max(textWidth, 1); // Минимальная ширина 1, чтобы избежать нулевой ширины
+        canvas.width = Math.max(textWidth, 1);
         canvas.height = fontSize;
 
         context.fillStyle = 'white';
@@ -99,19 +97,14 @@ export function MG({color, message}: IModel) {
         context.textAlign = 'center';
         context.textBaseline = 'middle';
 
-        // Установка прозрачности (альфа-канала) в зависимости от того, есть ли текст
         context.globalAlpha = message ? 1 : 0;
 
-        // Отрисовка текста в центре canvas
         if (message) {
             context.fillText(message, canvas.width / 2, canvas.height / 2);
         }
-
-        // Восстановление полной прозрачности
         context.globalAlpha = 1;
     }
 
-// Использование canvas для создания текстуры
     const textureText = new CanvasTexture(canvas);
 
 
@@ -140,7 +133,6 @@ export function MG({color, message}: IModel) {
                         scale={scale}
                     >
                         <meshBasicMaterial
-
                             map={texture}
                             polygonOffset
                             polygonOffsetFactor={-1}/>
