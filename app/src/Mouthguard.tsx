@@ -2,7 +2,7 @@
 import {Decal, useAnimations, useGLTF, useTexture} from '@react-three/drei';
 import {CanvasTexture, MeshStandardMaterial} from "three";
 import {useControls} from "leva";
-import {useEffect, useRef, useState} from "react";
+import { useRef, useState} from "react";
 import {degToRad} from "three/src/math/MathUtils.js";
 // @ts-ignore
 import {DecalGeometry} from "three/examples/jsm/geometries/DecalGeometry";
@@ -34,7 +34,7 @@ export function MG({color, message, isAnimationEnabled}: IModel) {
     // useEffect(() => {
     //     // Воспроизводим анимацию вперед, если чекбокс включен, и в обратную сторону, если выключен
     //     const direction = isAnimationEnabled ? 1 : -1;
-    //     actions['16934_athletic_mouthguard_V1Action'].reset().setDirection(direction).play();
+    //     actions['Key.001Action'].reset().setDirection(direction).play();
     // }, [isAnimationEnabled]);
 
     useControls({
