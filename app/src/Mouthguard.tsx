@@ -1,8 +1,8 @@
 
 import {Decal, useAnimations, useGLTF, useTexture} from '@react-three/drei';
-import {CanvasTexture, MeshStandardMaterial} from "three";
+import {CanvasTexture, LoopPingPong, MeshStandardMaterial} from "three";
 import {useControls} from "leva";
-import { useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {degToRad} from "three/src/math/MathUtils.js";
 // @ts-ignore
 import {DecalGeometry} from "three/examples/jsm/geometries/DecalGeometry";
@@ -13,13 +13,12 @@ interface IModel {
     color: string;
     message: string;
     isAnimationEnabled: boolean;
-
 }
 
 export function MG({color, message, isAnimationEnabled}: IModel) {
     const group = useRef<Geometry>();
     const { nodes, animations } = useGLTF("/MG.glb");
-    const { actions } = useAnimations(animations, group);
+    const { actions, names } = useAnimations(animations, group);
 
     const [pos, setPos] = useState<DecalGeometry>([0, 1, 0]);
     const [rotation, setRotation] = useState<DecalGeometry>([0,  0, 0]);
@@ -30,12 +29,54 @@ export function MG({color, message, isAnimationEnabled}: IModel) {
     const [scaletext, setScaletext] = useState<DecalGeometry>([1, 1, 1]);
 
     const node: Geometry = nodes["16934_athletic_mouthguard_V1"];
+    // const [animationTime, setAnimationTime] = useState(0);
+
+    useEffect(() => {
+        if (isAnimationEnabled){
+            actions[names[0]]?.play().setLoop(LoopPingPong,2);
+        }
+        else {
+            actions[names[0]]?.stop();
+        }
+    }, [isAnimationEnabled]);
 
     // useEffect(() => {
-    //     // Воспроизводим анимацию вперед, если чекбокс включен, и в обратную сторону, если выключен
-    //     const direction = isAnimationEnabled ? 1 : -1;
-    //     actions['Key.001Action'].reset().setDirection(direction).play();
-    // }, [isAnimationEnabled]);
+    //     let animationAction = actions[names[0]];
+    //
+    //     const handleFinish = () => {
+    //         // Вызывается, когда анимация завершена
+    //         animationAction.getMixer().removeEventListener('finished', handleFinish);
+    //         setAnimationTime(0); // Сбрасываем время анимации
+    //         animationAction.stop(); // Останавливаем анимацию
+    //     };
+    //
+    //     if (isAnimationEnabled) {
+    //         // Устанавливаем слушатель события завершения анимации
+    //         animationAction.getMixer().addEventListener('finished', handleFinish);
+    //
+    //         // Запускаем анимацию
+    //         animationAction.play().setLoop(LoopPingPong, 2);
+    //     } else {
+    //         // Останавливаем анимацию и убираем слушатель события завершения
+    //         animationAction.getMixer().removeEventListener('finished', handleFinish);
+    //         animationAction.stop();
+    //     }
+    //
+    //     // Устанавливаем время анимации на половину продолжительности
+    //     setAnimationTime(animationAction.getClip().duration/1.2);
+    //
+    //     // Запускаем таймер для остановки анимации на половине проигрывания
+    //     const timerId = setInterval(() => {
+    //         animationAction.time = animationTime;
+    //     }, 100);
+    //
+    //     // Отмечаем, что useEffect должен сбросить состояние при размонтировании компонента
+    //     return () => {
+    //         clearInterval(timerId);
+    //         animationAction.getMixer().removeEventListener('finished', handleFinish);
+    //     };
+    // }, [isAnimationEnabled, animationTime]);  // Обновление при изменении isAnimationEnabled и animationTime
+
 
     useControls({
         angle: {
@@ -96,9 +137,7 @@ export function MG({color, message, isAnimationEnabled}: IModel) {
     if (context) {
         context.font = `${fontSize}px ${fontFamily}`;
 
-        const textWidth = context.measureText(message).width;
-
-        canvas.width = Math.max(textWidth, 1);
+        canvas.width = Math.max(230, 1);
         canvas.height = fontSize;
 
         context.fillStyle = 'white';
@@ -109,13 +148,15 @@ export function MG({color, message, isAnimationEnabled}: IModel) {
         context.globalAlpha = message ? 1 : 0;
 
         if (message) {
-            context.fillText(message, canvas.width / 2, canvas.height / 2);
+            // Center the text horizontally and vertically
+            const x = canvas.width / 2;
+            const y = canvas.height / 2;
+            context.fillText(message, x, y);
         }
         context.globalAlpha = 1;
     }
 
     const textureText = new CanvasTexture(canvas);
-
 
     return (
         <group ref={group} dispose={null}>
