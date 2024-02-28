@@ -12,9 +12,10 @@ interface IModel {
     color: string;
     message: string;
     isAnimationEnabled: boolean;
+    isImage: boolean
 }
 
-export function MG({color, message, isAnimationEnabled}: IModel) {
+export function MG({color, message, isAnimationEnabled, isImage}: IModel) {
     const group = useRef<Geometry>();
     const {nodes, animations} = useGLTF("/MG.glb");
     const {actions, names} = useAnimations(animations, group);
@@ -148,16 +149,17 @@ export function MG({color, message, isAnimationEnabled}: IModel) {
                         node.morphTargetInfluences
                     }
                 >
-                    <Decal
-                        position={pos}
-                        rotation={rotation}
-                        scale={scale}
-                    >
-                        <meshBasicMaterial
-                            map={texture}
-                            polygonOffset
-                            polygonOffsetFactor={-1}/>
-                    </Decal>
+                    {isImage &&
+                        <Decal
+                            position={pos}
+                            rotation={rotation}
+                            scale={scale}
+                        >
+                            <meshBasicMaterial
+                                map={texture}
+                                polygonOffset
+                                polygonOffsetFactor={-1}/>
+                        </Decal>}
                     <Decal
                         position={postext}
                         rotation={rotationtext}
