@@ -138,7 +138,7 @@ export function MG({color, message, isAnimationEnabled, isImage, image, isMessag
             <group name="Scene">
                 <mesh
                     name="16934_athletic_mouthguard_V1"
-                    position={[2,0,0]}
+                    position={[0,0,0]}
                     rotation={[0, 3, 0]}
                     scale={[0.5, 0.5, 0.5]}
                     castShadow
@@ -176,7 +176,6 @@ export function MG({color, message, isAnimationEnabled, isImage, image, isMessag
                                 transparent
                             />
                         </Decal>}
-
                 </mesh>
             </group>
         </group>

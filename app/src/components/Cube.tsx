@@ -66,12 +66,12 @@ const Cube: React.FC = () => {
                         <img onClick={handleChangeImage} src={vite} alt={'vite'}/>
                         <img onClick={handleChangeImage} src={react} alt={'react'}/>
                     </div>
-                    <div>
+                    <div style={{width: '100%'}}>
                         <div style={{display: 'flex', alignItems: 'center'}}>
                             <p>нанести надпись: </p>
                             <input type={"checkbox"} onChange={handleIsMessege}/>
                         </div>
-                        <input onChange={handleMessege} placeholder={'введите желаемое слово'}/>
+                        <input className={'styled-input'} onChange={handleMessege} placeholder={'введите желаемое слово'}/>
                     </div>
                     <div style={{display: 'flex', alignItems: 'center'}}>
                         <p>Стабилизаторы:</p>
@@ -89,7 +89,6 @@ const Cube: React.FC = () => {
                             <meshStandardMaterial color="red"/>
                             <MG color={color} message={messege} isAnimationEnabled={checked} isImage={isImage} image={image} isMessage={isMessage}/>
                             <OrbitControls
-                                target={[2,0,0]}
                                 ref={orbitControlsRef}
                                 enablePan={false}
                                 enableZoom={false}/>
