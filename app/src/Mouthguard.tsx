@@ -1,5 +1,5 @@
 import {Decal, useAnimations, useGLTF, useTexture} from '@react-three/drei';
-import {CanvasTexture, LoopPingPong, MeshStandardMaterial} from "three";
+import {CanvasTexture, MeshStandardMaterial} from "three";
 import {useControls} from "leva";
 import {useEffect, useRef, useState} from "react";
 import {degToRad} from "three/src/math/MathUtils.js";
@@ -7,8 +7,6 @@ import {degToRad} from "three/src/math/MathUtils.js";
 import {DecalGeometry} from "three/examples/jsm/geometries/DecalGeometry";
 // @ts-ignore
 import {Geometry} from "three/examples/jsm/deprecated/Geometry";
-import {Simulate} from "react-dom/test-utils";
-import reset = Simulate.reset;
 
 interface IModel {
     color: string;
@@ -36,52 +34,21 @@ export function MG({color, message, isAnimationEnabled}: IModel) {
         const action = actions[names[0]];
         if (isAnimationEnabled){
             if(action){
+                action.timeScale = 1
                 action.clampWhenFinished = true;
-                action.repetitions = 0
-                action.play();
+                action.repetitions = 1
+                action.reset().play();
             }
         }
         else {
-            action?.stop();
+            if (action){
+                action.timeScale = -1;
+                action.clampWhenFinished = true;
+                action.repetitions = 1;
+                action?.reset().play();
+            }
         }
     }, [isAnimationEnabled]);
-
-    // useEffect(() => {
-    //     let animationAction = actions[names[0]];
-    //
-    //     const handleFinish = () => {
-    //         // Вызывается, когда анимация завершена
-    //         animationAction.getMixer().removeEventListener('finished', handleFinish);
-    //         setAnimationTime(0); // Сбрасываем время анимации
-    //         animationAction.stop(); // Останавливаем анимацию
-    //     };
-    //
-    //     if (isAnimationEnabled) {
-    //         // Устанавливаем слушатель события завершения анимации
-    //         animationAction.getMixer().addEventListener('finished', handleFinish);
-    //
-    //         // Запускаем анимацию
-    //         animationAction.play().setLoop(LoopPingPong, 2);
-    //     } else {
-    //         // Останавливаем анимацию и убираем слушатель события завершения
-    //         animationAction.getMixer().removeEventListener('finished', handleFinish);
-    //         animationAction.stop();
-    //     }
-    //
-    //     // Устанавливаем время анимации на половину продолжительности
-    //     setAnimationTime(animationAction.getClip().duration/1.2);
-    //
-    //     // Запускаем таймер для остановки анимации на половине проигрывания
-    //     const timerId = setInterval(() => {
-    //         animationAction.time = animationTime;
-    //     }, 100);
-    //
-    //     // Отмечаем, что useEffect должен сбросить состояние при размонтировании компонента
-    //     return () => {
-    //         clearInterval(timerId);
-    //         animationAction.getMixer().removeEventListener('finished', handleFinish);
-    //     };
-    // }, [isAnimationEnabled, animationTime]);  // Обновление при изменении isAnimationEnabled и animationTime
 
 
     useControls({
