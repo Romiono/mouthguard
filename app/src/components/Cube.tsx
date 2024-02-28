@@ -3,12 +3,17 @@ import {Environment, OrbitControls} from "@react-three/drei";
 import {Canvas} from "@react-three/fiber";
 import '../App.css';
 import {MG} from "../Mouthguard.tsx";
+import vite from '../../public/vite.svg';
+import react from '../assets/react.svg';
 
 const Cube: React.FC = () => {
     const [color, setColor] = useState('green');
     const [messege, setMessege] = useState('');
     const [checked, setChecked] = useState(false);
     const [isImage, setIsImage] = useState(false);
+    const [image, setImage] = useState(vite);
+    const [cost, setCost] = useState(5000);
+    const [isMessage, setIsMessage] = useState(false)
     const orbitControlsRef = useRef(null);
 
     const handleColor = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,15 +24,27 @@ const Cube: React.FC = () => {
 
     const handleMessege = (e: ChangeEvent<HTMLInputElement>) => {
         setMessege(e.target.value);
-        console.log(messege)
+    }
+
+    const handleIsMessege = () => {
+        setIsMessage(!isMessage)
+        setCost(!isMessage ? cost + 1000 : cost - 1000);
+
     }
 
     const handleChecked = () => {
         setChecked(!checked);
+        setCost(!checked ? cost + 3000 : cost - 3000);
     }
     const handleIsImage = () => {
         setIsImage(!isImage);
+        setCost(!isImage ? cost + 1000 : cost - 1000);
     }
+
+    const handleChangeImage = (e: React.MouseEvent<HTMLImageElement>) => {
+        setImage(e.currentTarget.src);
+        console.log(image);
+    };
 
     return (
         <>
@@ -41,17 +58,27 @@ const Cube: React.FC = () => {
                             <p><input name="dzen" type="radio" value="grey" onChange={handleColor}/> серый</p>
                         </div>
                     </div>
-                    <div style={{display: 'flex'}}>
-                        <p>Нанести картинку:</p>
-                        <input type={"checkbox"} onChange={handleIsImage}/>
+                    <div>
+                        <div style={{display: 'flex'}}>
+                            <p>Нанести картинку:</p>
+                            <input type={"checkbox"} onChange={handleIsImage}/>
+                        </div>
+                        <img onClick={handleChangeImage} src={vite} alt={'vite'}/>
+                        <img onClick={handleChangeImage} src={react} alt={'react'}/>
                     </div>
                     <div>
-                        <p style={{marginBottom: '10px'}}>нанести надпись</p>
+                        <div style={{display: 'flex'}}>
+                            <p>нанести надпись: </p>
+                            <input type={"checkbox"} onChange={handleIsMessege}/>
+                        </div>
                         <input onChange={handleMessege} placeholder={'введите желаемое слово'}/>
                     </div>
                     <div style={{display: 'flex'}}>
                         <p>Стабилизаторы:</p>
                         <input type={"checkbox"} onChange={handleChecked}/>
+                    </div>
+                    <div>
+                        <h3>Цена: {cost}</h3>
                     </div>
                 </form>
             </div>
@@ -60,7 +87,7 @@ const Cube: React.FC = () => {
                     <group>
                         <mesh>
                             <meshStandardMaterial color="red"/>
-                            <MG color={color} message={messege} isAnimationEnabled={checked} isImage={isImage}/>
+                            <MG color={color} message={messege} isAnimationEnabled={checked} isImage={isImage} image={image} isMessage={isMessage}/>
                             <OrbitControls
                                 ref={orbitControlsRef}
                                 enablePan={false}

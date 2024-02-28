@@ -12,10 +12,12 @@ interface IModel {
     color: string;
     message: string;
     isAnimationEnabled: boolean;
-    isImage: boolean
+    isImage: boolean;
+    isMessage: boolean;
+    image: string;
 }
 
-export function MG({color, message, isAnimationEnabled, isImage}: IModel) {
+export function MG({color, message, isAnimationEnabled, isImage, image, isMessage}: IModel) {
     const group = useRef<Geometry>();
     const {nodes, animations} = useGLTF("/MG.glb");
     const {actions, names} = useAnimations(animations, group);
@@ -99,7 +101,7 @@ export function MG({color, message, isAnimationEnabled, isImage}: IModel) {
     })
 
     const material = new MeshStandardMaterial({color: color});
-    const texture = useTexture('/vite.svg')
+    const texture = useTexture(image)
 
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
@@ -160,18 +162,20 @@ export function MG({color, message, isAnimationEnabled, isImage}: IModel) {
                                 polygonOffset
                                 polygonOffsetFactor={-1}/>
                         </Decal>}
-                    <Decal
-                        position={postext}
-                        rotation={rotationtext}
-                        scale={scaletext}
-                    >
-                        <meshBasicMaterial
-                            map={textureText}
-                            polygonOffset
-                            polygonOffsetFactor={-1}
-                            transparent
-                        />
-                    </Decal>
+                    {isMessage &&
+                        <Decal
+                            position={postext}
+                            rotation={rotationtext}
+                            scale={scaletext}
+                        >
+                            <meshBasicMaterial
+                                map={textureText}
+                                polygonOffset
+                                polygonOffsetFactor={-1}
+                                transparent
+                            />
+                        </Decal>}
+
                 </mesh>
             </group>
         </group>
