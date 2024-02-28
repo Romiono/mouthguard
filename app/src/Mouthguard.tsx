@@ -22,7 +22,7 @@ export function MG({color, message, isAnimationEnabled, isImage, image, isMessag
     const {nodes, animations} = useGLTF("/MG.glb");
     const {actions, names} = useAnimations(animations, group);
 
-    const [pos, setPos] = useState<DecalGeometry>([0, 1, 0]);
+    const [pos, setPos] = useState<DecalGeometry>([0, 0, 0]);
     const [rotation, setRotation] = useState<DecalGeometry>([0, 0, 0]);
     const [scale, setScale] = useState<DecalGeometry>([1, 1, 1]);
 
@@ -161,7 +161,10 @@ export function MG({color, message, isAnimationEnabled, isImage, image, isMessag
                             <meshBasicMaterial
                                 map={texture}
                                 polygonOffset
-                                polygonOffsetFactor={-1}/>
+                                polygonOffsetFactor={-1}
+                                transparent={true}
+                            />
+
                         </Decal>}
                     {isMessage &&
                         <Decal
