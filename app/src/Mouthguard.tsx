@@ -28,10 +28,9 @@ export function MG({color, message, isAnimationEnabled}: IModel) {
     const [scaletext, setScaletext] = useState<DecalGeometry>([1, 1, 1]);
 
     const node: Geometry = nodes["16934_athletic_mouthguard_V1"];
-    // const [animationTime, setAnimationTime] = useState(0);
+    const action = actions[names[0]];
 
     useEffect(() => {
-        const action = actions[names[0]];
         if (isAnimationEnabled){
             if(action){
                 action.timeScale = 1
@@ -48,7 +47,7 @@ export function MG({color, message, isAnimationEnabled}: IModel) {
                 action?.reset().play();
             }
         }
-    }, [isAnimationEnabled]);
+    }, [action, isAnimationEnabled]);
 
 
     useControls({
@@ -150,7 +149,6 @@ export function MG({color, message, isAnimationEnabled}: IModel) {
                     }
                 >
                     <Decal
-                        debug
                         position={pos}
                         rotation={rotation}
                         scale={scale}
@@ -161,7 +159,6 @@ export function MG({color, message, isAnimationEnabled}: IModel) {
                             polygonOffsetFactor={-1}/>
                     </Decal>
                     <Decal
-                        debug
                         position={postext}
                         rotation={rotationtext}
                         scale={scaletext}
