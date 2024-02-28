@@ -1,4 +1,3 @@
-
 import {Decal, useAnimations, useGLTF, useTexture} from '@react-three/drei';
 import {CanvasTexture, LoopPingPong, MeshStandardMaterial} from "three";
 import {useControls} from "leva";
@@ -8,6 +7,8 @@ import {degToRad} from "three/src/math/MathUtils.js";
 import {DecalGeometry} from "three/examples/jsm/geometries/DecalGeometry";
 // @ts-ignore
 import {Geometry} from "three/examples/jsm/deprecated/Geometry";
+import {Simulate} from "react-dom/test-utils";
+import reset = Simulate.reset;
 
 interface IModel {
     color: string;
@@ -17,11 +18,11 @@ interface IModel {
 
 export function MG({color, message, isAnimationEnabled}: IModel) {
     const group = useRef<Geometry>();
-    const { nodes, animations } = useGLTF("/MG.glb");
-    const { actions, names } = useAnimations(animations, group);
+    const {nodes, animations} = useGLTF("/MG.glb");
+    const {actions, names} = useAnimations(animations, group);
 
     const [pos, setPos] = useState<DecalGeometry>([0, 1, 0]);
-    const [rotation, setRotation] = useState<DecalGeometry>([0,  0, 0]);
+    const [rotation, setRotation] = useState<DecalGeometry>([0, 0, 0]);
     const [scale, setScale] = useState<DecalGeometry>([1, 1, 1]);
 
     const [postext, setPostext] = useState<DecalGeometry>([0, 1, 0]);
@@ -32,11 +33,16 @@ export function MG({color, message, isAnimationEnabled}: IModel) {
     // const [animationTime, setAnimationTime] = useState(0);
 
     useEffect(() => {
+        const action = actions[names[0]];
         if (isAnimationEnabled){
-            actions[names[0]]?.play().setLoop(LoopPingPong,2);
+            if(action){
+                action.clampWhenFinished = true;
+                action.repetitions = 0
+                action.play();
+            }
         }
         else {
-            actions[names[0]]?.stop();
+            action?.stop();
         }
     }, [isAnimationEnabled]);
 
@@ -81,26 +87,26 @@ export function MG({color, message, isAnimationEnabled}: IModel) {
     useControls({
         angle: {
             min: degToRad(180),
-            max:  degToRad( 360),
+            max: degToRad(360),
             value: 0,
             step: 0.01,
             onChange: (value) => {
                 const x = Math.cos(value) * 3.5;
                 const z = Math.sin(value) * 3.5;
-                const rot = Math.atan2(x,z);
+                const rot = Math.atan2(x, z);
                 setRotation(() => [0, rot, 0]);
                 setPos(() => [x, 1, z]);
             }
         },
         angleText: {
             min: degToRad(180),
-            max:  degToRad(360),
+            max: degToRad(360),
             value: 0,
             step: 0.01,
             onChange: (value) => {
                 const x = Math.cos(value) * 3.5;
                 const z = Math.sin(value) * 3.5;
-                const rot = Math.atan2(x,z);
+                const rot = Math.atan2(x, z);
                 setRotationtext(() => [0, rot, 0]);
                 setPostext(() => [x, 1, z]);
             }
@@ -119,7 +125,7 @@ export function MG({color, message, isAnimationEnabled}: IModel) {
             value: 1,
             step: 0.01,
             onChange: (value) => {
-                setScaletext(() => [value*3, value, value])
+                setScaletext(() => [value * 3, value, value])
             }
         }
 
