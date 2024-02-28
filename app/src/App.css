@@ -8,6 +8,7 @@
   text-align: left;
   height: 100vh;
   width: 100vw;
+  background: linear-gradient(to right bottom, #e1fcde, #000000);
 }
 
 body {
@@ -17,8 +18,11 @@ body {
 
 .form {
   position: absolute;
-  left: 10%;
-  top: 25%;
+  left: 25%;
+  top: 50%;
+  translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
   border: gray 1px solid;
   background-color: rgb(91, 141, 72, .5);
   z-index: 10;
@@ -31,4 +35,78 @@ body {
   gap: 30px;
 }
 
+input[type="checkbox"] {
+  appearance: none; /* Скрытие стандартного внешнего вида */
+  -webkit-appearance: none; /* Для поддержки веб-кит браузеров */
+  -moz-appearance: none; /* Для поддержки Firefox */
 
+  width: 20px; /* Задание размеров */
+  height: 20px;
+  border: 2px solid #333; /* Рамка */
+  border-radius: 4px; /* Закругление углов */
+  outline: none; /* Убираем рамку фокуса */
+  cursor: pointer; /* Изменение курсора при наведении */
+  margin-left: 10px;
+
+}
+
+/* Стилизация чекбокса в состоянии "checked" */
+input[type="checkbox"]:checked {
+  background-color: #66bb6a; /* Цвет фона при выборе */
+  border-color: #66bb6a; /* Цвет рамки при выборе */
+}
+
+/* Стилизация галочки внутри чекбокса */
+input[type="checkbox"]::before {
+  content: "\2713"; /* Знак галочки (✓) */
+  display: block;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  line-height: 17px;
+  color: #fff; /* Цвет галочки */
+  font-size: 16px; /* Размер шрифта галочки */
+  visibility: hidden; /* Изначально скрываем галочку */
+}
+
+/* Показываем галочку при выборе чекбокса */
+input[type="checkbox"]:checked::before {
+  visibility: visible;
+}
+
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 20px;
+  height: 20px;
+  border: 2px solid #333;
+  border-radius: 50%; /* Круглые углы для радиокнопки */
+  outline: none;
+  cursor: pointer;
+}
+
+/* Стилизация радиокнопки в состоянии "checked" */
+input[type="radio"]:checked {
+  background-color: #66bb6a;
+  border-color: #66bb6a;
+}
+
+/* Стилизация точки внутри радиокнопки */
+input[type="radio"]::before {
+  content: "\2022"; /* Знак точки (•) */
+  display: block;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  line-height: 16px;
+  color: #fff;
+  font-size: 35px;
+  visibility: hidden;
+}
+
+/* Показываем точку при выборе радиокнопки */
+input[type="radio"]:checked::before {
+  visibility: visible;
+}

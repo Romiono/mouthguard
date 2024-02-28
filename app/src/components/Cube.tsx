@@ -52,14 +52,14 @@ const Cube: React.FC = () => {
                 <form className={'form'}>
                     <div>
                         <p style={{marginBottom: '10px'}}>Выберите цвет</p>
-                        <div style={{display: 'flex', justifyContent: 'center', gap: '10px'}}>
-                            <p><input name="dzen" type="radio" value="green" onChange={handleColor}/> зеленный</p>
-                            <p><input name="dzen" type="radio" value="red" onChange={handleColor}/> красный</p>
-                            <p><input name="dzen" type="radio" value="grey" onChange={handleColor}/> серый</p>
+                        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px'}}>
+                            <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '5px'}}><input name="dzen" type="radio" value="green" onChange={handleColor}/> зеленный</p>
+                            <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '5px'}}><input name="dzen" type="radio" value="red" onChange={handleColor}/> красный</p>
+                            <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '5px'}}><input name="dzen" type="radio" value="grey" onChange={handleColor}/> серый</p>
                         </div>
                     </div>
                     <div>
-                        <div style={{display: 'flex'}}>
+                        <div style={{display: 'flex', alignItems: 'center'}}>
                             <p>Нанести картинку:</p>
                             <input type={"checkbox"} onChange={handleIsImage}/>
                         </div>
@@ -67,13 +67,13 @@ const Cube: React.FC = () => {
                         <img onClick={handleChangeImage} src={react} alt={'react'}/>
                     </div>
                     <div>
-                        <div style={{display: 'flex'}}>
+                        <div style={{display: 'flex', alignItems: 'center'}}>
                             <p>нанести надпись: </p>
                             <input type={"checkbox"} onChange={handleIsMessege}/>
                         </div>
                         <input onChange={handleMessege} placeholder={'введите желаемое слово'}/>
                     </div>
-                    <div style={{display: 'flex'}}>
+                    <div style={{display: 'flex', alignItems: 'center'}}>
                         <p>Стабилизаторы:</p>
                         <input type={"checkbox"} onChange={handleChecked}/>
                     </div>
@@ -82,17 +82,18 @@ const Cube: React.FC = () => {
                     </div>
                 </form>
             </div>
-            <Canvas>
+            <Canvas style={{width: '70vw', position: "absolute", right: '0'}}>
                 <Suspense fallback={null}>
                     <group>
                         <mesh>
                             <meshStandardMaterial color="red"/>
                             <MG color={color} message={messege} isAnimationEnabled={checked} isImage={isImage} image={image} isMessage={isMessage}/>
                             <OrbitControls
+                                target={[2,0,0]}
                                 ref={orbitControlsRef}
                                 enablePan={false}
                                 enableZoom={false}/>
-                            <Environment preset="sunset" background/>
+                            <Environment preset="apartment" background={false}/>
                         </mesh>
                     </group>
 
