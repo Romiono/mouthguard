@@ -39,8 +39,6 @@ const Cube: React.FC = () => {
                         <input onChange={handleMessege} placeholder={'введите желаемое слово'}/>
                         <p>Стабилизаторы</p>
                         <input type={"checkbox"} onChange={handleChecked}/>
-                        <p>повороты</p>
-                        <button> 90 градусов</button>
                     </form>
                 </div>
                 <Canvas>
